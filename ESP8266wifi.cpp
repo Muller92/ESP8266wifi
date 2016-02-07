@@ -677,6 +677,10 @@ uint8_t ESP8266wifi::listAps(struct listApDataItem* data, uint8_t len, char* spe
     memset(msgIn, '\0', sizeof(msgIn));
     memset(data, 0, sizeof(listApDataItem) * len);
 
+	//writeCommand(CWMODE_3, EOL);
+    //if (!readCommand(1000, OK, NO_CHANGE))
+	    //goto error;
+
     if(specificSSID != NULL) {
         //issue request for specific ap; may not work on older firmware
         writeCommand(CWLAP3);
