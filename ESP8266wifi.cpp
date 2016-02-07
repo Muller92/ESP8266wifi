@@ -7,6 +7,7 @@
 //
 
 #include "ESP8266wifi.h"
+#include <avr/wdt.h>
 
 // Workaround for http://gcc.gnu.org/bugzilla/show_bug.cgi?id=34734
 #ifdef PROGMEM
@@ -626,6 +627,7 @@ byte ESP8266wifi::readCommand(int timeout, const char* text1, const char* text2)
     // read chars until first match or timeout
     unsigned long stop = millis() + timeout;
     do {
+        wdt_reset();
         while (_serialIn->available()) {
             char c = readChar();
             pos1 = (c == buf1[pos1]) ? pos1 + 1 : 0;
@@ -646,6 +648,7 @@ byte ESP8266wifi::readBuffer(char* buf, byte count, char delim, int timeout) {
     unsigned long stop = millis() + timeout;
 
     while (pos < count) {
+        wdt_reset();
         if(_serialIn->available()) {
             if (_serialIn->peek() == delim)
                 break;
