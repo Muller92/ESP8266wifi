@@ -26,6 +26,7 @@ const char BUSY[] PROGMEM =  "busy";
 const char LINKED[] PROGMEM = "Linked";
 const char ALREADY[] PROGMEM = "ALREAY";//yes typo in firmware..
 const char READY[] PROGMEM = "ready";
+const char INVALID[] PROGMEM = "invalid";
 const char NO_IP[] PROGMEM = "0.0.0.0";
 
 const char CIPSEND[] PROGMEM = "AT+CIPSEND=";
@@ -142,7 +143,7 @@ bool ESP8266wifi::begin() {
         delay(500);
         digitalWrite(_resetPin, HIGH); // select the radio
         // Look for ready string from wifi module
-        statusOk = readCommand(3000, READY) == 1;
+        statusOk = readCommand(3000, READY, INVALID);
         if(statusOk)
             break;
     }
